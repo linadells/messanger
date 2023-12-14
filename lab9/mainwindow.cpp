@@ -65,6 +65,7 @@ void MainWindow::receive(){
                 else{
                     QString s= QString::fromStdString(sender)+QString::fromStdString(": ")+QString::fromStdString(message);
                     //ui->chat->appendPlainText(s);
+                    ui->textBrowser->append(s);
                     qDebug()<<s;
                 }
             }
