@@ -6,35 +6,222 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>277</width>
-    <height>192</height>
+    <width>334</width>
+    <height>238</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <widget class="QPushButton" name="loginButton">
+  <property name="styleSheet">
+   <string notr="true">/* General Styles */
+* {
+    background-color: #1D1D1D; /* Dark background */
+    color: #E0E0E0; /* Soft white text for better readability */
+    border: none;
+    font-family: 'Segoe UI', sans-serif; /* Consistent, readable font */
+}
+
+/* Button Styles */
+QPushButton {
+    background-color: rgb(37, 88, 89); 
+    border: 1px solid #3F3F3F;
+    padding: 5px;
+    border-radius: 5px; /* Slightly rounded corners for buttons */
+    color: #E0E0E0; /* Light text color for buttons */
+    text-align: center;
+}
+
+QPushButton:hover {
+    background-color: rgb(4, 183, 186); /* Brighter color on hover for feedback */
+    border-color: #E0E0E0; /* Light border on hover */
+}
+
+QPushButton:pressed {
+    background-color: #2A2A2A; /* Darker color when pressed */
+    color: rgb(4, 183, 186); /* Contrast color text when pressed */
+}
+
+/* Text Edit Styles */
+QTextBrowser, QPlainTextEdit {
+    font: 14pt &quot;Segoe UI&quot;;
+    background-color: rgb(36, 36, 36);
+    color: #E0E0E0; /* Light text color for readability */
+    border: 1px solid rgb(85, 255, 255); /* Subtle border color */
+    border-radius: 5px; /* Rounded corners */
+    padding: 5px;
+}
+
+QPlainTextEdit:focus {
+    border-color: #4DB8FF; /* Highlight color when focused */
+}
+
+/* Scroll Area Styles */
+QScrollArea {
+    border: none;
+}
+
+/* List Widget Styles */
+QListWidget {
+    background-color: rgb(37, 88, 89);
+    border-radius: 10px;
+    border: 1px solid #3F3F3F;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Subtle shadow for depth */
+    color: #E0E0E0; /* Light text color for readability */
+    padding: 10px;
+}
+
+/* Menu Bar Styles */
+QMenuBar, QMenuBar::item {
+    background-color: #1D1D1D;
+    color: #E0E0E0;
+    border: none;
+}
+
+QMenuBar::item:selected {
+    background-color: #3F3F3F;
+}
+
+/* Status Bar Styles */
+QStatusBar {
+    background-color: #1D1D1D;
+    color: #E0E0E0;
+    border-top: 1px solid #3F3F3F; /* Subtle top border for definition */
+}</string>
+  </property>
+  <widget class="QWidget" name="gridLayoutWidget">
    <property name="geometry">
     <rect>
-     <x>90</x>
-     <y>110</y>
-     <width>80</width>
-     <height>18</height>
+     <x>0</x>
+     <y>0</y>
+     <width>331</width>
+     <height>231</height>
     </rect>
    </property>
-   <property name="text">
-    <string>Login</string>
-   </property>
-  </widget>
-  <widget class="QPlainTextEdit" name="logName">
-   <property name="geometry">
-    <rect>
-     <x>30</x>
-     <y>59</y>
-     <width>201</width>
-     <height>41</height>
-    </rect>
-   </property>
+   <layout class="QGridLayout" name="gridLayout_2">
+    <item row="5" column="1">
+     <spacer name="verticalSpacer_5">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>20</width>
+        <height>40</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item row="0" column="1">
+     <spacer name="verticalSpacer_6">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>20</width>
+        <height>100</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item row="4" column="1">
+     <spacer name="verticalSpacer_7">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>20</width>
+        <height>100</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item row="1" column="1">
+     <widget class="QPlainTextEdit" name="logName_2">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>1</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>250</width>
+        <height>55</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>2200</width>
+        <height>30</height>
+       </size>
+      </property>
+      <property name="baseSize">
+       <size>
+        <width>0</width>
+        <height>60</height>
+       </size>
+      </property>
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <property name="centerOnScroll">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="1">
+     <widget class="QPushButton" name="loginButton_2">
+      <property name="text">
+       <string>Login</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="2">
+     <spacer name="horizontalSpacer_3">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>78</width>
+        <height>20</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item row="2" column="1">
+     <spacer name="verticalSpacer_8">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>20</width>
+        <height>50</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item row="1" column="0">
+     <spacer name="horizontalSpacer_4">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>78</width>
+        <height>20</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+   </layout>
   </widget>
  </widget>
  <resources/>

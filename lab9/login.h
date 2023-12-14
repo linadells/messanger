@@ -17,7 +17,7 @@ public:
     ~login();
 
 private slots:
-    void on_loginButton_clicked();
+    void on_loginButton_2_clicked();
 
 private:
     Ui::login *ui;

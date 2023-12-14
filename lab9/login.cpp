@@ -15,9 +15,10 @@ login::~login()
     delete ui;
 }
 
-void login::on_loginButton_clicked()
+void login::on_loginButton_2_clicked()
 {
-    QString name=ui->logName->toPlainText();
+    QString name=ui->logName_2->toPlainText();
+    qDebug()<<name;
     window=new MainWindow(nullptr, name);
     window->name=name;
     hide();

@@ -66,14 +66,6 @@ public:
             send(clientSocket, jsonString.c_str(), strlen(jsonString.c_str()), 0);
             return 0;
     }
-
-    QString receiveMessages() {
-
-    }
-
-    std::vector<std::string>getUsers(){
-        return usersNames;
-    }
     // Закриття сокету та очищення Winsock
     ~client() {
         closesocket(clientSocket);
@@ -81,15 +73,3 @@ public:
     }
 };
 
-/*int main() {
-    std::cout << "Enter your name:";
-    char str[100];
-    std::cin.getline(str, sizeof(str));
-    client* user = new client(str, 12345, "192.168.1.103");
-    user->creatingSocket();
-    user->initializeAddrAndConnect();
-    std::thread clientThread(&client::receiveMessages, user);
-    clientThread.detach();  // Детачимо, щоб потік відпрацьовував незалежно
-    user->sendMessages();
-    return 0;
-} */
