@@ -18,7 +18,6 @@ login::~login()
 void login::on_loginButton_clicked()
 {
     QString name=ui->logName->toPlainText();
-    qDebug()<<name;
     window=new MainWindow(nullptr, name);
     window->name=name;
     hide();

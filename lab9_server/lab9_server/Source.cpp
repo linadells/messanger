@@ -56,7 +56,6 @@ public:
     }
 
     void reg(SOCKET clientSocket) {
-        //buffer = "";
         char buf[100];
         int bytesRead;
         bytesRead = recv(clientSocket, buf, sizeof(buf), 0);
@@ -78,7 +77,6 @@ public:
             clientNames->push_back(clientName);
             std::cout << "add: " << clientName << std::endl;
         }
-
     }
 
     // Очікування підключення клієнта
@@ -135,30 +133,42 @@ public:
     void sendMessage(char received[1000]) {
         int ind = 0;
         std::string receiver = parseJson(received, 'r');
+        if (receiver == "server") {
+            std::string clientName = parseJson(received, 'm');
 
-        std::stringstream ss(receiver);
-        std::string token;
-        std::vector<std::string> tokens;//всі отримувачі
-
-        while (std::getline(ss, token, ' ')) {
-            tokens.push_back(token);
+            for (int i = 0; i < clientNames->size(); i++) {
+                json jsonMessage = {
+                            {"message", clientName}, {"receiver",clientNames->at(i)}, {"sender", std::string("server")} };
+                std::string jsonString = jsonMessage.dump();
+                send(clientSockets->at(i), jsonString.c_str(), strlen(jsonString.c_str()), 0);
+            }
+            clientNames->push_back(clientName);
         }
+        else {
+            std::stringstream ss(receiver);
+            std::string token;
+            std::vector<std::string> tokens;//всі отримувачі
 
-        for (int i = 0; i < tokens.size(); i++) {
-            receiver = tokens[i];
-            for (auto it = clientNames->begin(); it != clientNames->end(); it++) {
-                if ((*it) == receiver) {
-                    break;
+            while (std::getline(ss, token, ' ')) {
+                tokens.push_back(token);
+            }
+
+            for (int i = 0; i < tokens.size(); i++) {
+                receiver = tokens[i];
+                for (auto it = clientNames->begin(); it != clientNames->end(); it++) {
+                    if ((*it) == receiver) {
+                        break;
+                    }
+                    ind++;
                 }
-                ind++;
+                if (ind == clientNames->size()) {
+                    std::cerr << "There aren`t such receivers ";
+                    return;
+                }
+                SOCKET clientSocket = clientSockets->at(ind);
+                send(clientSocket, received, strlen(received), 0);
+                std::cout << "sended:" << received << std::endl;
             }
-            if (ind == clientNames->size()) {
-                std::cerr << "There aren`t such receivers ";
-                return;
-            }
-            SOCKET clientSocket = clientSockets->at(ind);
-            send(clientSocket, received, strlen(received), 0);
-            std::cout <<"sended:" << received << std::endl;
         }
     }
 

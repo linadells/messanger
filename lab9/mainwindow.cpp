@@ -7,6 +7,7 @@
 #include <QDebug>
 #include <QPlainTextEdit>
 #include<thread>
+#include<vector>
 using namespace std;
 
 std::map<QString, QString> chats;
@@ -22,12 +23,10 @@ MainWindow::MainWindow(QWidget *parent, QString name)
     user->creatingSocket();
     user->initializeAddrAndConnect();
 
-    QAction *enterClicked = new QAction("Enter clicked", this);
-    QShortcut *shortcut = new QShortcut(QKeySequence("Enter"), this);
-    connect(shortcut, &QShortcut::activated, this, &MainWindow::on_sendBut_clicked);
-
     std::thread clientThread(&MainWindow::receive, this);
     clientThread.detach();
+
+
 }
 
 MainWindow::~MainWindow()
@@ -125,3 +124,13 @@ void MainWindow::on_receiver_itemClicked(QListWidgetItem *item)
     ui->textBrowser->append(chats[selectedUser]);
 }
 
+
+void MainWindow::on_createGroup_clicked()
+{
+    window=new groups(nullptr, user->usersNames);
+    window->show();
+}
+
+void MainWindow::createGroup(){
+
+}

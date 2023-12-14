@@ -41,7 +41,7 @@
         <x>10</x>
         <y>10</y>
         <width>191</width>
-        <height>501</height>
+        <height>291</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -49,27 +49,7 @@
         <widget class="QListWidget" name="receiver"/>
        </item>
        <item>
-        <spacer name="verticalSpacer_2">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeType">
-          <enum>QSizePolicy::Minimum</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>5</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pushButton_2">
-         <property name="text">
-          <string>create a group</string>
-         </property>
-        </widget>
+        <layout class="QVBoxLayout" name="verticalLayout"/>
        </item>
       </layout>
      </widget>
@@ -79,7 +59,7 @@
         <x>230</x>
         <y>480</y>
         <width>491</width>
-        <height>31</height>
+        <height>72</height>
        </rect>
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -126,6 +106,25 @@
         <height>451</height>
        </rect>
       </property>
+     </widget>
+     <widget class="QWidget" name="verticalLayoutWidget_2">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>309</y>
+        <width>191</width>
+        <height>211</height>
+       </rect>
+      </property>
+      <layout class="QVBoxLayout" name="group">
+       <item>
+        <widget class="QPushButton" name="createGroup">
+         <property name="text">
+          <string>create a group</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </widget>
     </widget>
    </widget>

@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include "client.cpp"
 #include<QListWidgetItem>
+#include<QStringList>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -20,14 +21,17 @@ public:
     ~MainWindow();
     QString name;
     client* user;
+    static QStringList listForGroup;
     void receive();
     void updateChat();
     QString getSelectedUserName();
     std::string parseJson(const char* jsonString, char t);
 private:
     Ui::MainWindow *ui;
+
 private slots:
     void on_sendBut_clicked();
     void on_receiver_itemClicked(QListWidgetItem *item);
+    void on_createGroup_clicked();
 };
 #endif // MAINWINDOW_H
