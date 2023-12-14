@@ -1,6 +1,6 @@
 ﻿  Source.cpp
-D:\користувач\Документи\моє\політех\3_sem\oc\lab9_server\lab9_server\Source.cpp(111,42): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-D:\користувач\Документи\моє\політех\3_sem\oc\lab9_server\lab9_server\Source.cpp(129,44): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-D:\користувач\Документи\моє\політех\3_sem\oc\lab9_server\lab9_server\Source.cpp(146,38): warning C4101: 'e': unreferenced local variable
-D:\користувач\Документи\моє\політех\3_sem\oc\lab9_server\lab9_server\Source.cpp(149): warning C4715: 'server::parseJson': not all control paths return a value
-  lab9_server.vcxproj -> D:\користувач\Документи\моє\політех\3_sem\oc\lab9_server\x64\Debug\lab9_server.exe
+D:\користувач\Документи\моє\політех\messanger\lab9_server\lab9_server\Source.cpp(71,70): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+D:\користувач\Документи\моє\політех\messanger\lab9_server\lab9_server\Source.cpp(155,48): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+D:\користувач\Документи\моє\політех\messanger\lab9_server\lab9_server\Source.cpp(175,38): warning C4101: 'e': unreferenced local variable
+D:\користувач\Документи\моє\політех\messanger\lab9_server\lab9_server\Source.cpp(178): warning C4715: 'server::parseJson': not all control paths return a value
+  lab9_server.vcxproj -> D:\користувач\Документи\моє\політех\messanger\lab9_server\x64\Debug\lab9_server.exe

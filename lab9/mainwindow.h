@@ -22,6 +22,7 @@ public:
     void receive();
     void updateUsersList();
     QString getSelectedUserName();
+    std::string parseJson(const char* jsonString, char t);
 private:
     Ui::MainWindow *ui;
 private slots:

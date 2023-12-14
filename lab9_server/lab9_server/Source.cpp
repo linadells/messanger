@@ -7,6 +7,7 @@
 #include <thread>
 #include<string>
 #include<nlohmann/json.hpp>
+#include <sstream>
 using json = nlohmann::json;
 
 class server {
@@ -35,6 +36,7 @@ public:
             WSACleanup();
             return 1;
         }
+        std::cout << "Creating socket: " << socket << std::endl;
         return 0;
     }
     // Налаштування адреси сервера та прив'язка сокету до адреси
@@ -51,6 +53,27 @@ public:
         }
         std::cout << "Server is created. Waiting..." << std::endl;
         return 0;
+    }
+
+    void reg(SOCKET clientSocket) {
+        //buffer = "";
+        char buf[100];
+        int bytesRead;
+        bytesRead = recv(clientSocket, buf, sizeof(buf), 0);
+        buf[bytesRead] = '\0';
+        std::string clientName = parseJson(buf, 'm'), res = parseJson(buf, 's');
+        
+        if (res == "server") {
+            for (int i = 0; i < clientNames->size(); i++) {
+                json jsonMessage = {
+                            {"message", clientName}, {"receiver", clientNames->at(i)}, {"sender", std::string("server")} };
+                std::string jsonString = jsonMessage.dump();
+                send(clientSockets->at(i), jsonString.c_str(), strlen(jsonString.c_str()), 0);
+            }
+            clientNames->push_back(clientName);
+            std::cout << "add: " << clientName << std::endl;
+        }
+
     }
 
     // Очікування підключення клієнта
@@ -72,6 +95,7 @@ public:
             }
             clientSockets->push_back(temp);
             std::cout << "Client is ready. You are able to start a chat" << std::endl;
+            reg(temp);
             // Створення окремого потоку для обслуговування клієнта
             std::thread clientThread(&server::gettingMessages, this, clientSockets->back());
             clientThread.detach();  // Детачимо, щоб потік відпрацьовував незалежно
@@ -82,9 +106,6 @@ public:
     // Отримання та вивід повідомлень від клієнта
     void gettingMessages(SOCKET clientSocket) {
         int bytesRead;
-        bytesRead = recv(clientSocket, buffer, sizeof(buffer), 0);
-        std::string clientName = std::string(buffer);
-        clientNames->push_back(clientName);
         while (true) {
             bytesRead = recv(clientSocket, buffer, sizeof(buffer), 0);
             if (bytesRead > 0) {
@@ -104,30 +125,38 @@ public:
         closesocket(clientSocket);
     }
 
-    // Відправка відповіді клієнту
-    void sendMessage(SOCKET clientSocket) {
-        std::cout << "Enter message to client:";
-        std::cin.getline(buffer, sizeof(buffer));
-        send(clientSocket, buffer, strlen(buffer), 0);
-    }
 
     // Пересилання повідомлення потрібному отрмувачу
     void sendMessage(char received[1000]) {
         int ind = 0;
         std::string receiver = parseJson(received, 'r');
-        for (auto it = clientNames->begin(); it != clientNames->end(); it++) {
-            if ((*it) == receiver) {
-                break;
+
+        std::stringstream ss(receiver);
+        std::string token;
+        std::vector<std::string> tokens;//всі отримувачі
+
+        while (std::getline(ss, token, ' ')) {
+            tokens.push_back(token);
+        }
+
+        for (int i = 0; i < tokens.size(); i++) {
+            receiver = tokens[i];
+            for (auto it = clientNames->begin(); it != clientNames->end(); it++) {
+                if ((*it) == receiver) {
+                    break;
+                }
+                ind++;
             }
-            ind++;
+            if (ind == clientNames->size()) {
+                std::cerr << "There aren`t such receivers ";
+                return;
+            }
+            SOCKET clientSocket = clientSockets->at(ind);
+            send(clientSocket, received, strlen(received), 0);
+            std::cout <<"sended:" << received << std::endl;
         }
-        if (ind == clientNames->size()) {
-            std::cerr << "There aren`t such receivers ";
-            return;
-        }
-        SOCKET clientSocket = clientSockets->at(ind);
-        send(clientSocket, received, strlen(received), 0);
     }
+
     std::string parseJson(const char* jsonString, char t) {
         try {
             json jsonObject = json::parse(jsonString);

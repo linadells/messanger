@@ -13,6 +13,7 @@ using json = nlohmann::json;
 
 class client {
     //Q_OBJECT
+public:
     std::string name;
     int port;
     SOCKET clientSocket;
@@ -21,7 +22,6 @@ class client {
     sockaddr_in serverAddr;
     std::vector<std::string> usersNames;
 
-public:
     client(std::string name, int port, const char* serverIP) {
         this->name = name;
         this->port = port;
