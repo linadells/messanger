@@ -1,6 +1,9 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include<iostream>
+#include <QAction>
+#include <QShortcut>
+#include <QKeySequence>
 #include <QDebug>
 #include <QPlainTextEdit>
 #include<thread>
@@ -18,12 +21,13 @@ MainWindow::MainWindow(QWidget *parent, QString name)
     qDebug()<<this->name;
     user->creatingSocket();
     user->initializeAddrAndConnect();
+
+    QAction *enterClicked = new QAction("Enter clicked", this);
+    QShortcut *shortcut = new QShortcut(QKeySequence("Enter"), this);
+    connect(shortcut, &QShortcut::activated, this, &MainWindow::on_sendBut_clicked);
+
     std::thread clientThread(&MainWindow::receive, this);
     clientThread.detach();
-
-    //    std::thread updateChatThread(&MainWindow::updateChat, this);
-    //    updateChatThread.detach();
-    //updateUsersList();
 }
 
 MainWindow::~MainWindow()
@@ -36,13 +40,12 @@ void MainWindow::on_sendBut_clicked()
     if (getSelectedUserName() != "") {
         user->sendMessages(ui->SendMessage->toPlainText(), name, getSelectedUserName());
         ui->textBrowser->append(QString::fromStdString(user->name) + ": " + ui->SendMessage->toPlainText());
+        chats[getSelectedUserName()] += QString::fromStdString(user->name) + ": " + ui->SendMessage->toPlainText()+"\n";
         ui->SendMessage->setPlainText("");
     }
 }
 
 void MainWindow::receive(){
-
-    //     ui->chat->appendPlainText(s);
     char get[1000];
     int bytesRead;
 
@@ -68,10 +71,10 @@ void MainWindow::receive(){
                 }
                 else{
                     QString s= QString::fromStdString(sender)+QString::fromStdString(": ")+QString::fromStdString(message);
-                    //ui->chat->appendPlainText(s);
-                    //ui->textBrowser->append(s);
                     chats[QString::fromStdString(sender)] += s;
-                    qDebug()<<s;
+                    if (getSelectedUserName() == QString::fromStdString(sender)) {
+                        ui->textBrowser->append(s);
+                    }
                 }
             }
         }
@@ -88,11 +91,9 @@ void MainWindow::receive(){
 
 QString MainWindow::getSelectedUserName() {
     if (ui->receiver->currentItem() == nullptr) {
-        // No item is selected
         return QString();
     }
 
-    // Get the text of the selected item
     QString selectedUserName = ui->receiver->currentItem()->text();
     return selectedUserName;
 }
@@ -117,10 +118,10 @@ std::string MainWindow::parseJson(const char* jsonString, char t) {
     }
 }
 
-
 void MainWindow::on_receiver_itemClicked(QListWidgetItem *item)
 {
     QString selectedUser = getSelectedUserName();
     ui->textBrowser->clear();
     ui->textBrowser->append(chats[selectedUser]);
 }
+

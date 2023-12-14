@@ -29,7 +29,5 @@ private:
 private slots:
     void on_sendBut_clicked();
     void on_receiver_itemClicked(QListWidgetItem *item);
-    //    void on_receiver_itemActivated(QListWidgetItem *item);
-    //void on_receiver_itemSelectionChanged();
 };
 #endif // MAINWINDOW_H

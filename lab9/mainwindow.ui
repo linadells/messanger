@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>886</width>
+    <height>632</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,8 +17,8 @@
    <widget class="QScrollArea" name="scrollArea">
     <property name="geometry">
      <rect>
-      <x>80</x>
-      <y>40</y>
+      <x>0</x>
+      <y>-10</y>
       <width>771</width>
       <height>531</height>
      </rect>
@@ -76,17 +76,42 @@
      <widget class="QWidget" name="horizontalLayoutWidget_2">
       <property name="geometry">
        <rect>
-        <x>640</x>
+        <x>230</x>
         <y>480</y>
-        <width>81</width>
+        <width>491</width>
         <height>31</height>
        </rect>
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout_2">
        <item>
+        <widget class="QPlainTextEdit" name="SendMessage">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>20</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="cursor" stdset="0">
+          <cursorShape>IBeamCursor</cursorShape>
+         </property>
+         <property name="centerOnScroll">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QPushButton" name="sendBut">
          <property name="text">
           <string>Send</string>
+         </property>
+         <property name="autoExclusive">
+          <bool>false</bool>
          </property>
         </widget>
        </item>
@@ -95,39 +120,11 @@
      <widget class="QTextBrowser" name="textBrowser">
       <property name="geometry">
        <rect>
-        <x>280</x>
-        <y>21</y>
-        <width>421</width>
-        <height>391</height>
-       </rect>
-      </property>
-     </widget>
-     <widget class="QPlainTextEdit" name="SendMessage">
-      <property name="geometry">
-       <rect>
         <x>230</x>
-        <y>480</y>
-        <width>403</width>
-        <height>29</height>
+        <y>10</y>
+        <width>491</width>
+        <height>451</height>
        </rect>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>0</width>
-        <height>20</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>16777215</width>
-        <height>30</height>
-       </size>
-      </property>
-      <property name="cursor" stdset="0">
-       <cursorShape>IBeamCursor</cursorShape>
-      </property>
-      <property name="centerOnScroll">
-       <bool>true</bool>
       </property>
      </widget>
     </widget>
@@ -138,7 +135,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
+     <width>886</width>
      <height>21</height>
     </rect>
    </property>
