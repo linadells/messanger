@@ -6,6 +6,8 @@
 #include<thread>
 using namespace std;
 
+std::map<QString, QString> chats;
+
 MainWindow::MainWindow(QWidget *parent, QString name)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -19,8 +21,8 @@ MainWindow::MainWindow(QWidget *parent, QString name)
     std::thread clientThread(&MainWindow::receive, this);
     clientThread.detach();
 
-    //std::thread updateUsersListThread(&MainWindow::updateUsersList, this);
-    //updateUsersListThread.detach();
+    //    std::thread updateChatThread(&MainWindow::updateChat, this);
+    //    updateChatThread.detach();
     //updateUsersList();
 }
 
@@ -31,18 +33,16 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_sendBut_clicked()
 {
-    user->sendMessages(ui->SendMessage->toPlainText(), name, getSelectedUserName());
-    //user->sendMessages(ui->SendMessage->toPlainText(), name, ui->temp->toPlainText());
-    //ui->chat->appendPlainText(ui->SendMessage->toPlainText());
-
-    ui->textBrowser->append(QString::fromStdString(user->name)+": "+ui->SendMessage->toPlainText());
-    //ui->chat->appendPlainText("\n");
-    ui->SendMessage->setPlainText("");
+    if (getSelectedUserName() != "") {
+        user->sendMessages(ui->SendMessage->toPlainText(), name, getSelectedUserName());
+        ui->textBrowser->append(QString::fromStdString(user->name) + ": " + ui->SendMessage->toPlainText());
+        ui->SendMessage->setPlainText("");
+    }
 }
 
 void MainWindow::receive(){
 
-   //     ui->chat->appendPlainText(s);
+    //     ui->chat->appendPlainText(s);
     char get[1000];
     int bytesRead;
 
@@ -63,12 +63,14 @@ void MainWindow::receive(){
                     for(int i=0;i<user->usersNames.size();i++){
                         std::cout<<user->usersNames[i]<<std::endl;
                         ui->receiver->addItem(QString::fromStdString(user->usersNames[i]));
+                        chats.insert(std::make_pair(QString::fromStdString(user->usersNames[i]), ""));
                     }
                 }
                 else{
                     QString s= QString::fromStdString(sender)+QString::fromStdString(": ")+QString::fromStdString(message);
                     //ui->chat->appendPlainText(s);
-                    ui->textBrowser->append(s);
+                    //ui->textBrowser->append(s);
+                    chats[QString::fromStdString(sender)] += s;
                     qDebug()<<s;
                 }
             }
@@ -84,26 +86,7 @@ void MainWindow::receive(){
     }
 }
 
-void MainWindow::updateUsersList() {
-    //while(true) {
-    ui->receiver->clear();
-    std::vector<std::string> userNamesVec = user->getUsers();
-    // for(int i=0;i<userNamesVec.size();i++){
-    //     qDebug()<<userNamesVec[i];
-    // }
-    QStringList userNames;
-    for (const auto &nameOfNewUser : userNamesVec) {
-        userNames.append(QString::fromStdString(nameOfNewUser));
-    }
-    for (const auto &nameOfNewUser : userNames) {
-        //nameOfNewUser.toStdString();
-        ui->receiver->addItem(nameOfNewUser);
-    }
-    //}
-}
-
 QString MainWindow::getSelectedUserName() {
-    // Check if any item is selected
     if (ui->receiver->currentItem() == nullptr) {
         // No item is selected
         return QString();
@@ -132,4 +115,12 @@ std::string MainWindow::parseJson(const char* jsonString, char t) {
     catch (const std::exception& e) {
         std::cerr << "Error parsing JSON";
     }
+}
+
+
+void MainWindow::on_receiver_itemClicked(QListWidgetItem *item)
+{
+    QString selectedUser = getSelectedUserName();
+    ui->textBrowser->clear();
+    ui->textBrowser->append(chats[selectedUser]);
 }
