@@ -33,7 +33,8 @@ void MainWindow::on_sendBut_clicked()
 {
     //user->sendMessages(message, name, selectedUserName);
     user->sendMessages(ui->SendMessage->toPlainText(), name, ui->temp->toPlainText());
-    ui->chat->appendPlainText(ui->SendMessage->toPlainText());
+    //ui->chat->appendPlainText(ui->SendMessage->toPlainText());
+    ui->textBrowser->append(ui->SendMessage->toPlainText());
     ui->chat->appendPlainText("\n");
     ui->SendMessage->setPlainText("");
 }
