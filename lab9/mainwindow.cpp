@@ -31,11 +31,12 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_sendBut_clicked()
 {
-    //user->sendMessages(message, name, selectedUserName);
-    user->sendMessages(ui->SendMessage->toPlainText(), name, ui->temp->toPlainText());
+    user->sendMessages(ui->SendMessage->toPlainText(), name, getSelectedUserName());
+    //user->sendMessages(ui->SendMessage->toPlainText(), name, ui->temp->toPlainText());
     //ui->chat->appendPlainText(ui->SendMessage->toPlainText());
-    ui->textBrowser->append(ui->SendMessage->toPlainText());
-    ui->chat->appendPlainText("\n");
+
+    ui->textBrowser->append(QString::fromStdString(user->name)+": "+ui->SendMessage->toPlainText());
+    //ui->chat->appendPlainText("\n");
     ui->SendMessage->setPlainText("");
 }
 
@@ -61,6 +62,7 @@ void MainWindow::receive(){
                     std::cout<<"all:\n";
                     for(int i=0;i<user->usersNames.size();i++){
                         std::cout<<user->usersNames[i]<<std::endl;
+                        ui->receiver->addItem(QString::fromStdString(user->usersNames[i]));
                     }
                 }
                 else{

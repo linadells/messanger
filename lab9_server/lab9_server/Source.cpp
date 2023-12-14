@@ -66,9 +66,14 @@ public:
         if (res == "server") {
             for (int i = 0; i < clientNames->size(); i++) {
                 json jsonMessage = {
-                            {"message", clientName}, {"receiver", clientNames->at(i)}, {"sender", std::string("server")} };
+                            {"message", clientName}, {"receiver",clientNames->at(i)}, {"sender", std::string("server")} };
                 std::string jsonString = jsonMessage.dump();
                 send(clientSockets->at(i), jsonString.c_str(), strlen(jsonString.c_str()), 0);
+
+                jsonMessage = {
+                            {"message", clientNames->at(i)}, {"receiver", clientName}, {"sender", std::string("server")} };
+                jsonString = jsonMessage.dump();
+                send(clientSocket, jsonString.c_str(), strlen(jsonString.c_str()), 0);
             }
             clientNames->push_back(clientName);
             std::cout << "add: " << clientName << std::endl;
